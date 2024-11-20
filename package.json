@@ -8,7 +8,8 @@
         "url": "git+https://github.com/hq-kit/cli.git"
     },
     "files": [
-        "dist"
+        "dist",
+        "src"
     ],
     "main": "./dist/index.js",
     "bin": {

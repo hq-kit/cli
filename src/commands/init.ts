@@ -93,7 +93,7 @@ export async function init() {
     }
 
     const config = {
-        $schema: 'https://hq-kit.vercel.app',
+        $schema: 'https://hq-ui.vercel.app',
         ui: uiFolder,
         lib: libFolder,
         css: cssLocation,
