@@ -165,7 +165,6 @@ export const components: Component[] = [
     { name: 'meter', children: [{ name: 'field' }] },
     { name: 'toast', children: [{ name: 'button' }, { name: 'loader' }] },
     { name: 'meter', children: [{ name: 'field' }] },
-    { name: 'rating', children: [{ name: 'field' }] },
     { name: 'chart' },
 
     // ------------------------------------------------------------------------------------- //
