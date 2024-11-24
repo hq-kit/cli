@@ -18,7 +18,7 @@ export const components: Component[] = [
     // ------------------------------------------------------------------------------------- //
     { name: 'divider' },
 
-    { name: 'menu', children: [{ name: 'dropdown' }, { name: 'keyboard' }, { name: 'popover' }] },
+    { name: 'menu', children: [{ name: 'button' }, { name: 'dropdown' }, { name: 'keyboard' }, { name: 'popover' }] },
     { name: 'list-box', children: [{ name: 'dropdown' }, { name: 'field' }] },
     { name: 'tag-group', children: [{ name: 'field' }, { name: 'badge' }] },
     { name: 'tag-field', children: [{ name: 'tag-group' }] },

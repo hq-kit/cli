@@ -146,10 +146,6 @@ export async function init() {
         devPackages += ' remix-themes'
     }
 
-    if (isTypescript()) {
-        devPackages += ' @types/node @types/react @types/react-dom'
-    }
-
     const action = packageManager === 'npm' ? 'i' : 'add'
     const installCommand = `${packageManager} ${action} ${mainPackages} && ${packageManager} ${action} -D ${devPackages}`
 
