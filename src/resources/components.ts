@@ -172,6 +172,7 @@ export const components: Component[] = [
     // ------------------------------------------------------------------------------------- //
     { name: 'divider' },
 
+    { name: 'container' },
     { name: 'sidebar', children: [{ name: 'button' }, { name: 'sheet' }, { name: 'tooltip' }] },
     { name: 'navbar', children: [{ name: 'button' }, { name: 'sheet' }] },
 ]

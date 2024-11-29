@@ -76,19 +76,21 @@ export async function add(options: any) {
         )
         return
     }
-
+    const exclude = ['utils']
     let selectedComponents = component ? component.split(' ') : []
     if (selectedComponents.length === 0) {
-        const choices = components.map((c) => {
-            if (c.name === 'divider') {
-                return new Separator()
-            } else {
-                return {
-                    name: c.name,
-                    value: c.name,
+        const choices = components
+            .filter((c) => !exclude.includes(c.name))
+            .map((c) => {
+                if (c.name === 'divider') {
+                    return new Separator()
+                } else {
+                    return {
+                        name: c.name,
+                        value: c.name,
+                    }
                 }
-            }
-        })
+            })
         selectedComponents = await checkbox({
             required: true,
             message: 'Choose components to add:',

@@ -13,7 +13,6 @@ import {
     isTypescript,
     possibilityComponentsPath,
     possibilityCssPath,
-    possibilityLibPath,
 } from '../utils/helpers'
 import { transformTsxToJsx } from '../utils/transform-jsx'
 const __filename = fileURLToPath(import.meta.url)
@@ -42,12 +41,7 @@ export async function init() {
         })
     }
 
-    let componentFolder: string,
-        uiFolder: string,
-        cssLocation: string,
-        tailwindSource: string,
-        providers: string,
-        libFolder: string
+    let componentFolder: string, uiFolder: string, cssLocation: string, tailwindSource: string, providers: string
 
     componentFolder = await input({
         message: 'Enter the path to your components folder:',
@@ -57,12 +51,6 @@ export async function init() {
 
     uiFolder = path.join(componentFolder, 'ui')
 
-    libFolder = await input({
-        message: 'Enter the path to your lib/utils folder:',
-        default: possibilityLibPath(),
-        validate: (value) => value.trim() !== '' || 'Path cannot be empty. Please enter a valid path.',
-    })
-
     cssLocation = await input({
         message: 'Where would you like to place the CSS file?',
         default: possibilityCssPath(),
@@ -70,6 +58,7 @@ export async function init() {
     })
 
     const utilsSourceFile = isTypescript() ? path.join(stubs, 'utils.stub') : path.join(stubs, 'utils-js.stub')
+
     if (isNextJs()) {
         tailwindSource = path.join(stubs, 'next/tailwind.config.stub')
         providers = path.join(stubs, 'next/providers.stub')
@@ -84,10 +73,6 @@ export async function init() {
         providers = path.join(stubs, 'vite/providers.stub')
     }
 
-    if (!fs.existsSync(libFolder)) {
-        fs.mkdirSync(libFolder, { recursive: true })
-    }
-
     if (!fs.existsSync(uiFolder)) {
         fs.mkdirSync(uiFolder, { recursive: true })
     }
@@ -95,7 +80,6 @@ export async function init() {
     const config = {
         $schema: 'https://hq-ui.vercel.app',
         ui: uiFolder,
-        lib: libFolder,
         css: cssLocation,
     }
 
@@ -163,17 +147,12 @@ export async function init() {
     })
 
     const utilsContent = fs.readFileSync(utilsSourceFile, 'utf8')
-    if (!fs.existsSync(libFolder)) {
-        fs.mkdirSync(libFolder, { recursive: true })
-        spinner.succeed(`Created lib folder at ${libFolder}`)
-    }
-
     if (isTypescript()) {
-        fs.writeFileSync(path.join(libFolder, 'utils.ts'), utilsContent, { flag: 'w' })
+        fs.writeFileSync(path.join(uiFolder, 'utils.tsx'), utilsContent, { flag: 'w' })
     } else {
-        fs.writeFileSync(path.join(libFolder, 'utils.js'), utilsContent, { flag: 'w' })
+        fs.writeFileSync(path.join(uiFolder, 'utils.jsx'), utilsContent, { flag: 'w' })
     }
-    spinner.succeed(`utils file copied to ${libFolder}`)
+    spinner.succeed(`utils file copied to ${uiFolder}`)
 
     try {
         const providersContent = fs.readFileSync(providers, 'utf8')

@@ -38,21 +38,6 @@ export function possibilityComponentsPath(): string {
     return 'components'
 }
 
-export function possibilityLibPath(): string {
-    if (isLaravel()) {
-        return 'resources/js/lib'
-    } else if (isNextJs() && hasFolder('src')) {
-        return 'src/lib'
-    } else if (isNextJs() && !hasFolder('src')) {
-        return 'lib'
-    } else if (isRemix()) {
-        return 'app/lib'
-    } else if (isVite()) {
-        return 'src/lib'
-    }
-    return 'lib'
-}
-
 export function possibilityRootPath(): string {
     if (isLaravel()) {
         return 'resources/js'
