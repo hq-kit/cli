@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
     :root {
@@ -76,15 +76,15 @@
     }
 
     *::-webkit-scrollbar {
-        @apply size-1.5 rounded-full;
+        @apply size-1.5 rounded-lg;
     }
 
     *::-webkit-scrollbar-track {
-        @apply rounded-full bg-transparent;
+        @apply rounded-lg bg-transparent;
     }
 
     *::-webkit-scrollbar-thumb {
-        @apply rounded-xl border border-transparent bg-muted;
+        @apply rounded-lg border border-transparent bg-muted;
     }
 }
 
@@ -99,7 +99,15 @@
     .overflow-scroll,
     .overflow-x-scroll,
     .overflow-y-scroll {
-        @apply [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-transparent [&::-webkit-scrollbar-thumb]:transition [&::-webkit-scrollbar-thumb]:duration-300 [&::-webkit-scrollbar-thumb]:hover:bg-muted;
+        @apply [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-inherit;
+    }
+    .overflow-auto:hover,
+    .overflow-x-auto:hover,
+    .overflow-y-auto:hover,
+    .overflow-scroll:hover,
+    .overflow-x-scroll:hover,
+    .overflow-y-scroll:hover {
+        @apply [&::-webkit-scrollbar-thumb]:bg-muted;
     }
 
     .no-scrollbar {

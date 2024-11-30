@@ -87,4 +87,3 @@ function Providers({ children }: { children: React.ReactNode }) {
 }
 
 export { Providers, useTheme }
-Package Sidebar
