@@ -121,7 +121,7 @@ export const components: Component[] = [
     // ------------------------------------------------------------------------------------- //
     { name: 'divider' },
 
-    { name: 'avatar', children: [{ name: 'visually-hidden' }] },
+    { name: 'avatar' },
     { name: 'carousel', children: [{ name: 'button' }] },
 
     // ------------------------------------------------------------------------------------- //
@@ -149,7 +149,7 @@ export const components: Component[] = [
     },
     {
         name: 'multi-select',
-        children: [{ name: 'list-box' }, { name: 'popover' }, { name: 'tag-group' }, { name: 'visually-hidden' }],
+        children: [{ name: 'list-box' }, { name: 'popover' }, { name: 'tag-group' }],
     },
 
     // ------------------------------------------------------------------------------------- //
