@@ -1,5 +1,7 @@
 
 
+## [0.0.16](https://github.com/hq-kit/cli/compare/v0.0.15...v0.0.16) (2024-11-30)
+
 ## [0.0.14](https://github.com/hq-kit/cli/compare/v0.0.13...v0.0.14) (2024-11-29)
 
 ## [0.0.12](https://github.com/hq-kit/cli/compare/v0.0.11...v0.0.12) (2024-11-24)
