@@ -115,6 +115,7 @@ export const components: Component[] = [
     { name: 'separator' },
     { name: 'show-more', children: [{ name: 'button' }] },
     { name: 'description-list' },
+    { name: 'grid' },
 
     // ------------------------------------------------------------------------------------- //
     // ⌘ The children of Media

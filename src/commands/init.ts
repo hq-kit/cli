@@ -11,6 +11,7 @@ import {
     isNextJs,
     isRemix,
     isTypescript,
+    isVite,
     possibilityComponentsPath,
     possibilityCssPath,
 } from '../utils/helpers'
@@ -22,26 +23,7 @@ export const resourceDir = path.resolve(__dirname, '../src/resources')
 const stubs = path.resolve(__dirname, '../src/resources/stubs')
 
 export async function init() {
-    const tailwindConfigExists = fs.existsSync('tailwind.config.js') || fs.existsSync('tailwind.config.ts')
-    if (!tailwindConfigExists) {
-        const packageManager = await getPackageManager()
-        const action = packageManager === 'npm' ? 'i' : 'add'
-        const installCommand = `${packageManager} ${action} tailwindcss postcss autoprefixer -D
-        npx tailwindcss init ${isRemix() && '--ts'} -p`
-
-        const child = spawn(installCommand, {
-            stdio: 'inherit',
-            shell: true,
-        })
-
-        await new Promise<void>((resolve) => {
-            child.on('close', () => {
-                resolve()
-            })
-        })
-    }
-
-    let componentFolder: string, uiFolder: string, cssLocation: string, tailwindSource: string, providers: string
+    let componentFolder: string, uiFolder: string, cssLocation: string, providers: string
 
     componentFolder = await input({
         message: 'Enter the path to your components folder:',
@@ -60,16 +42,12 @@ export async function init() {
     const utilsSourceFile = isTypescript() ? path.join(stubs, 'utils.stub') : path.join(stubs, 'utils-js.stub')
 
     if (isNextJs()) {
-        tailwindSource = path.join(stubs, 'next/tailwind.config.stub')
         providers = path.join(stubs, 'next/providers.stub')
     } else if (isLaravel()) {
-        tailwindSource = path.join(stubs, 'laravel/tailwind.config.stub')
         providers = path.join(stubs, 'laravel/providers.stub')
     } else if (isRemix()) {
-        tailwindSource = path.join(stubs, 'remix/tailwind.config.stub')
         providers = path.join(stubs, 'remix/providers.stub')
     } else {
-        tailwindSource = path.join(stubs, 'vite/tailwind.config.stub')
         providers = path.join(stubs, 'vite/providers.stub')
     }
 
@@ -84,14 +62,6 @@ export async function init() {
     }
 
     const spinner = ora(`Initializing HQ...`).start()
-
-    const tailwindConfigTarget = fs.existsSync('tailwind.config.js') ? 'tailwind.config.js' : 'tailwind.config.ts'
-    try {
-        const tailwindConfigContent = fs.readFileSync(tailwindSource, 'utf8')
-        fs.writeFileSync(tailwindConfigTarget, tailwindConfigContent, { flag: 'w' })
-    } catch (error) {
-        spinner.fail(`Failed to write Tailwind config to ${tailwindConfigTarget}`)
-    }
 
     // Handle CSS file placement (always overwrite)
     const cssSourcePath = path.join(resourceDir, 'theme/app.css')
@@ -113,7 +83,7 @@ export async function init() {
     }
 
     const packageManager = await getPackageManager()
-    let mainPackages = ['react-aria-components', 'hq-icons'].join(' ')
+    let mainPackages = ['react-aria-components', 'hq-icons', 'tailwindcss'].join(' ')
     let devPackages = [
         'tailwindcss-react-aria-components',
         'tailwind-variants',
@@ -123,7 +93,11 @@ export async function init() {
     ].join(' ')
 
     if (isNextJs()) {
-        devPackages += ' next-themes'
+        devPackages += ' next-themes @tailwindcss/postcss postcss'
+    }
+
+    if (isLaravel() || isVite()) {
+        devPackages += ' @tailwindcss/vite'
     }
 
     if (isRemix()) {
