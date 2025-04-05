@@ -11,21 +11,19 @@ export const components: Component[] = [
 
     { name: 'button' },
     { name: 'file-trigger', children: [{ name: 'button' }] },
-    { name: 'toggle', children: [{ name: 'button' }] },
+    { name: 'toggle' },
 
     // ------------------------------------------------------------------------------------- //
     // ⌘ The children of Collections
     // ------------------------------------------------------------------------------------- //
     { name: 'divider' },
 
-    { name: 'menu', children: [{ name: 'button' }, { name: 'dropdown' }, { name: 'keyboard' }, { name: 'popover' }] },
-    { name: 'list-box', children: [{ name: 'dropdown' }, { name: 'field' }] },
+    { name: 'menu' },
+    { name: 'list-box' },
     { name: 'tag-group', children: [{ name: 'field' }, { name: 'badge' }] },
-    { name: 'tag-field', children: [{ name: 'tag-group' }] },
     { name: 'table', children: [{ name: 'checkbox' }] },
     { name: 'grid-list', children: [{ name: 'checkbox' }] },
-    { name: 'choicebox', children: [{ name: 'checkbox' }] },
-    { name: 'tree', children: [{ name: 'checkbox' }] },
+    { name: 'tree' },
 
     // ------------------------------------------------------------------------------------- //
     // ⌘ The children of Colors
@@ -40,9 +38,10 @@ export const components: Component[] = [
             { name: 'color-slider' },
             { name: 'color-swatch' },
             { name: 'field' },
+            { name: 'popover' },
         ],
     },
-    { name: 'color-field', children: [{ name: 'color-picker' }] },
+    { name: 'color-field', children: [{ name: 'color-picker' }, { name: 'color-field' }, { name: 'field' }] },
     { name: 'color-area', children: [{ name: 'color-thumb' }] },
     { name: 'color-slider', children: [{ name: 'color-thumb' }, { name: 'field' }] },
     { name: 'color-swatch-picker', children: [{ name: 'color-swatch' }] },
@@ -55,8 +54,8 @@ export const components: Component[] = [
     { name: 'divider' },
 
     { name: 'slider', children: [{ name: 'field' }] },
-    { name: 'switch' },
-    { name: 'toolbar', children: [{ name: 'toggle' }, { name: 'separator' }] },
+    { name: 'switch', children: [{ name: 'field' }] },
+    { name: 'toolbar', children: [{ name: 'toggle' }] },
     { name: 'command', children: [{ name: 'separator' }, { name: 'keyboard' }] },
     { name: 'context-menu', children: [{ name: 'menu' }] },
 
@@ -65,14 +64,11 @@ export const components: Component[] = [
     // ------------------------------------------------------------------------------------- //
     { name: 'divider' },
 
-    { name: 'calendar', children: [{ name: 'button' }] },
+    { name: 'calendar', children: [{ name: 'button' }, { name: 'menu' }] },
     { name: 'range-calendar', children: [{ name: 'calendar' }] },
     { name: 'date-field', children: [{ name: 'field' }] },
-    { name: 'time-field', children: [{ name: 'date-field' }, { name: 'field' }] },
-    {
-        name: 'date-picker',
-        children: [{ name: 'popover' }, { name: 'date-field' }, { name: 'range-calendar' }],
-    },
+    { name: 'time-field', children: [{ name: 'date-field' }] },
+    { name: 'date-picker', children: [{ name: 'popover' }, { name: 'date-field' }, { name: 'range-calendar' }] },
     { name: 'date-range-picker', children: [{ name: 'date-picker' }] },
 
     // ------------------------------------------------------------------------------------- //
@@ -82,18 +78,15 @@ export const components: Component[] = [
 
     { name: 'form' },
     { name: 'text-field', children: [{ name: 'field' }] },
-    { name: 'search-field', children: [{ name: 'field' }, { name: 'button' }] },
+    { name: 'search-field', children: [{ name: 'field' }] },
     { name: 'textarea', children: [{ name: 'field' }] },
     { name: 'otp' },
     { name: 'number-field', children: [{ name: 'field' }] },
     { name: 'checkbox', children: [{ name: 'field' }] },
     { name: 'radio', children: [{ name: 'field' }] },
+    { name: 'selection-box', children: [{ name: 'field' }] },
     { name: 'drop-zone' },
-    { name: 'tag-group', children: [{ name: 'field' }, { name: 'tag-group' }] },
-    {
-        name: 'rich-text-field',
-        children: [{ name: 'toolbar' }, { name: 'menu' }],
-    },
+    { name: 'rich-text-field', children: [{ name: 'toolbar' }, { name: 'menu' }] },
 
     // ------------------------------------------------------------------------------------- //
     // ⌘ The children of Navigation
@@ -101,8 +94,8 @@ export const components: Component[] = [
     { name: 'divider' },
 
     { name: 'link' },
-    { name: 'breadcrumbs', children: [{ name: 'link' }] },
-    { name: 'pagination', children: [{ name: 'button' }] },
+    { name: 'breadcrumbs' },
+    { name: 'pagination' },
     { name: 'tabs' },
     { name: 'disclosure' },
 
@@ -111,11 +104,10 @@ export const components: Component[] = [
     // ------------------------------------------------------------------------------------- //
     { name: 'divider' },
 
-    { name: 'card', children: [{ name: 'heading' }] },
+    { name: 'card' },
     { name: 'separator' },
-    { name: 'show-more', children: [{ name: 'button' }] },
+    { name: 'spoiler', children: [{ name: 'button' }] },
     { name: 'description-list' },
-    { name: 'grid' },
 
     // ------------------------------------------------------------------------------------- //
     // ⌘ The children of Media
@@ -123,16 +115,17 @@ export const components: Component[] = [
     { name: 'divider' },
 
     { name: 'avatar' },
-    { name: 'carousel', children: [{ name: 'button' }] },
+    { name: 'carousel' },
+    { name: 'user' },
 
     // ------------------------------------------------------------------------------------- //
     // ⌘ The children of Overlays
     // ------------------------------------------------------------------------------------- //
     { name: 'divider' },
 
-    { name: 'modal', children: [{ name: 'dialog' }] },
-    { name: 'sheet', children: [{ name: 'dialog' }] },
-    { name: 'popover', children: [{ name: 'dialog' }] },
+    { name: 'modal' },
+    { name: 'sheet' },
+    { name: 'popover' },
     { name: 'tooltip' },
 
     // ------------------------------------------------------------------------------------- //
@@ -140,18 +133,9 @@ export const components: Component[] = [
     // ------------------------------------------------------------------------------------- //
     { name: 'divider' },
 
-    {
-        name: 'combo-box',
-        children: [{ name: 'field' }, { name: 'list-box' }, { name: 'popover' }],
-    },
-    {
-        name: 'select',
-        children: [{ name: 'field' }, { name: 'list-box' }, { name: 'popover' }],
-    },
-    {
-        name: 'multi-select',
-        children: [{ name: 'list-box' }, { name: 'popover' }, { name: 'tag-group' }],
-    },
+    { name: 'combo-box', children: [{ name: 'field' }] },
+    { name: 'select', children: [{ name: 'field' }] },
+    { name: 'multi-select', children: [{ name: 'field' }] },
 
     // ------------------------------------------------------------------------------------- //
     // ⌘ The children of Statuses
@@ -159,13 +143,10 @@ export const components: Component[] = [
     { name: 'divider' },
 
     { name: 'badge' },
-    { name: 'loader' },
     { name: 'note' },
-    { name: 'progress-bar', children: [{ name: 'field' }] },
-    { name: 'progress-circle' },
+    { name: 'progress', children: [{ name: 'field' }] },
     { name: 'meter', children: [{ name: 'field' }] },
-    { name: 'toast', children: [{ name: 'button' }, { name: 'loader' }] },
-    { name: 'meter', children: [{ name: 'field' }] },
+    { name: 'toast' },
     { name: 'chart' },
 
     // ------------------------------------------------------------------------------------- //
@@ -174,6 +155,6 @@ export const components: Component[] = [
     { name: 'divider' },
 
     { name: 'container' },
-    { name: 'sidebar', children: [{ name: 'button' }, { name: 'sheet' }, { name: 'tooltip' }] },
+    { name: 'sidebar', children: [{ name: 'button' }, { name: 'sheet' }, { name: 'badge' }, { name: 'tooltip' }] },
     { name: 'navbar', children: [{ name: 'button' }, { name: 'sheet' }] },
 ]

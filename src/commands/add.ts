@@ -85,10 +85,7 @@ export async function add(options: any) {
                 if (c.name === 'divider') {
                     return new Separator()
                 } else {
-                    return {
-                        name: c.name,
-                        value: c.name,
-                    }
+                    return { name: c.name, value: c.name }
                 }
             })
         selectedComponents = await checkbox({

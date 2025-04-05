@@ -53,6 +53,36 @@ export function possibilityRootPath(): string {
     return ''
 }
 
+export function possibilityLibPath(): string {
+    if (isLaravel()) {
+        return 'resources/js/lib'
+    } else if (isNextJs() && hasFolder('src')) {
+        return 'src/lib'
+    } else if (isNextJs() && !hasFolder('src')) {
+        return 'lib'
+    } else if (isRemix()) {
+        return 'lib'
+    } else if (isVite()) {
+        return 'src/lib'
+    }
+    return 'lib'
+}
+
+export function tailwindConfigPath(): string {
+    if (isLaravel()) {
+        return 'postcss.config.mjs'
+    } else if (isNextJs() && hasFolder('src')) {
+        return 'src/config/hq.json'
+    } else if (isNextJs() && !hasFolder('src')) {
+        return 'config/hq.json'
+    } else if (isRemix()) {
+        return 'config/hq.json'
+    } else if (isVite()) {
+        return 'src/config/hq.json'
+    }
+    return 'config/hq.json'
+}
+
 export function isNextJs(): boolean {
     return fs.existsSync('next.config.ts') || fs.existsSync('next.config.js') || fs.existsSync('next.config.mjs')
 }

@@ -14,16 +14,17 @@ import {
     isVite,
     possibilityComponentsPath,
     possibilityCssPath,
+    possibilityLibPath,
 } from '../utils/helpers'
 import { transformTsxToJsx } from '../utils/transform-jsx'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 export const resourceDir = path.resolve(__dirname, '../src/resources')
-const stubs = path.resolve(__dirname, '../src/resources/stubs')
+export const stubsDir = path.resolve(__dirname, '../src/resources/stubs')
 
 export async function init() {
-    let componentFolder: string, uiFolder: string, cssLocation: string, providers: string
+    let componentFolder: string, uiFolder: string, cssLocation: string, providers: string, libFolder: string
 
     componentFolder = await input({
         message: 'Enter the path to your components folder:',
@@ -33,38 +34,41 @@ export async function init() {
 
     uiFolder = path.join(componentFolder, 'ui')
 
+    libFolder = await input({
+        message: 'Enter the path to your library folder:',
+        default: possibilityLibPath(),
+        validate: (value) => value.trim() !== '' || 'Path cannot be empty. Please enter a valid path.',
+    })
+
     cssLocation = await input({
         message: 'Where would you like to place the CSS file?',
         default: possibilityCssPath(),
         validate: (value) => value.trim() !== '' || 'Path cannot be empty. Please enter a valid path.',
     })
 
-    const utilsSourceFile = isTypescript() ? path.join(stubs, 'utils.stub') : path.join(stubs, 'utils-js.stub')
+    const utilsSourceFile = isTypescript() ? path.join(stubsDir, 'utils.stub') : path.join(stubsDir, 'utils-js.stub')
+    const hooksSourceFile = isTypescript() ? path.join(stubsDir, 'hooks.stub') : path.join(stubsDir, 'hooks-js.stub')
 
     if (isNextJs()) {
-        providers = path.join(stubs, 'next/providers.stub')
+        providers = path.join(stubsDir, 'next/providers.stub')
     } else if (isLaravel()) {
-        providers = path.join(stubs, 'laravel/providers.stub')
+        providers = path.join(stubsDir, 'laravel/providers.stub')
     } else if (isRemix()) {
-        providers = path.join(stubs, 'remix/providers.stub')
+        providers = path.join(stubsDir, 'remix/providers.stub')
     } else {
-        providers = path.join(stubs, 'vite/providers.stub')
+        providers = path.join(stubsDir, 'vite/providers.stub')
     }
 
     if (!fs.existsSync(uiFolder)) {
         fs.mkdirSync(uiFolder, { recursive: true })
     }
 
-    const config = {
-        $schema: 'https://hq-ui.vercel.app',
-        ui: uiFolder,
-        css: cssLocation,
-    }
+    const config = { $schema: 'https://hq-ui.vercel.app', ui: uiFolder, css: cssLocation, lib: libFolder }
 
     const spinner = ora(`Initializing HQ...`).start()
 
     // Handle CSS file placement (always overwrite)
-    const cssSourcePath = path.join(resourceDir, 'theme/app.css')
+    const cssSourcePath = path.join(resourceDir, 'app.css')
     if (!fs.existsSync(path.dirname(cssLocation))) {
         fs.mkdirSync(path.dirname(cssLocation), { recursive: true })
         spinner.succeed(`Created directory for CSS at ${chalk.blue(path.dirname(cssLocation))}`)
@@ -83,14 +87,10 @@ export async function init() {
     }
 
     const packageManager = await getPackageManager()
-    let mainPackages = ['react-aria-components', 'hq-icons', 'tailwindcss'].join(' ')
-    let devPackages = [
-        'tailwindcss-react-aria-components',
-        'tailwind-variants',
-        'tailwind-merge',
-        'clsx',
-        'tailwindcss-animate',
-    ].join(' ')
+    let mainPackages = ['react-aria-components', 'hq-icons', 'tailwindcss', 'tailwindcss-react-aria-components'].join(
+        ' ',
+    )
+    let devPackages = ['tailwind-variants', 'clsx', 'tailwindcss-animate'].join(' ')
 
     if (isNextJs()) {
         devPackages += ' next-themes @tailwindcss/postcss postcss'
@@ -109,10 +109,7 @@ export async function init() {
 
     spinner.info(`Installing dependencies...`)
 
-    const child = spawn(installCommand, {
-        stdio: 'inherit',
-        shell: true,
-    })
+    const child = spawn(installCommand, { stdio: 'inherit', shell: true })
 
     await new Promise<void>((resolve) => {
         child.on('close', () => {
@@ -122,11 +119,19 @@ export async function init() {
 
     const utilsContent = fs.readFileSync(utilsSourceFile, 'utf8')
     if (isTypescript()) {
-        fs.writeFileSync(path.join(uiFolder, 'utils.tsx'), utilsContent, { flag: 'w' })
+        fs.writeFileSync(path.join(libFolder, 'utils.ts'), utilsContent, { flag: 'w' })
     } else {
-        fs.writeFileSync(path.join(uiFolder, 'utils.jsx'), utilsContent, { flag: 'w' })
+        fs.writeFileSync(path.join(libFolder, 'utils.js'), utilsContent, { flag: 'w' })
     }
-    spinner.succeed(`utils file copied to ${uiFolder}`)
+    spinner.succeed(`utils file copied to ${libFolder}`)
+
+    const hooksContent = fs.readFileSync(hooksSourceFile, 'utf8')
+    if (isTypescript()) {
+        fs.writeFileSync(path.join(libFolder, 'hooks.tsx'), hooksContent, { flag: 'w' })
+    } else {
+        fs.writeFileSync(path.join(libFolder, 'hooks.jsx'), hooksContent, { flag: 'w' })
+    }
+    spinner.succeed(`hooks file copied to ${libFolder}`)
 
     try {
         const providersContent = fs.readFileSync(providers, 'utf8')
@@ -157,10 +162,7 @@ export async function init() {
     // Wait for the installation to complete before proceeding
     spinner.succeed('Installation complete.')
 
-    const continuedToAddComponent = spawn('npx hq-kit add', {
-        stdio: 'inherit',
-        shell: true,
-    })
+    const continuedToAddComponent = spawn('npx hq-kit add', { stdio: 'inherit', shell: true })
 
     await new Promise<void>((resolve) => {
         continuedToAddComponent.on('close', () => {

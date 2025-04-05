@@ -1,14 +1,13 @@
 @import 'tailwindcss';
 
+@plugin 'tailwindcss-react-aria-components';
 @plugin 'tailwindcss-animate';
 
 @variant dark (&:is(.dark *));
 
-@theme {
-    --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-mono: var(--font-geist-mono), 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas',
-        '"Liberation Mono"', '"Courier New"', 'monospace';
+@theme inline {
+    --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    --font-mono: var(--font-mono), ui-monospace, monospace;
 
     --color-bg: var(--bg);
     --color-fg: var(--fg);
@@ -18,6 +17,12 @@
 
     --color-secondary: var(--secondary);
     --color-secondary-fg: var(--secondary-fg);
+
+    --color-primary: var(--primary);
+    --color-primary-fg: var(--primary-fg);
+
+    --color-info: var(--info);
+    --color-info-fg: var(--info-fg);
 
     --color-success: var(--success);
     --color-success-fg: var(--success-fg);
@@ -40,12 +45,18 @@
     --color-chart-3: var(--chart-3);
     --color-chart-4: var(--chart-4);
     --color-chart-5: var(--chart-5);
+
+    --radius-xs: calc(var(--radius-lg) - 4px);
+    --radius-sm: calc(var(--radius-lg) - 2px);
+    --radius-md: calc(var(--radius-lg) - 1px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius-lg) + 4px);
 }
 
 @layer base {
     :root {
-        --bg: hsl(0 0% 98.04%);
-        --fg: hsl(240 10% 3.92%);
+        --bg: oklch(0.985 0 0);
+        --fg: oklch(0.21 0.006 285.885);
         --primary: hsl(224.3 76.3% 48%);
         --primary-fg: hsl(0 0% 98.04%);
         --secondary: hsl(211.7 96.4% 78.4%);
@@ -54,10 +65,12 @@
         --danger-fg: hsl(0 0% 98.04%);
         --success: hsl(142.1 76.2% 36.3%);
         --success-fg: hsl(0 0% 98.04%);
+        --info: hsl(293.41, 69.48%, 48.82%);
+        --info-fg: hsl(0 0% 98.04%);
         --warning: hsl(24.6 95% 53.1%);
         --warning-fg: hsl(0 0% 98.04%);
-        --muted: hsl(240 4.88% 83.92%);
-        --muted-fg: hsl(240 3.83% 46.08%);
+        --muted: oklch(0.871 0.006 286.286);
+        --muted-fg: oklch(0.552 0.016 285.938);
 
         --chart-1: oklch(0.546 0.245 262.881);
         --chart-2: oklch(0.707 0.165 254.624);
@@ -65,66 +78,40 @@
         --chart-4: oklch(0.882 0.059 254.128);
         --chart-5: oklch(0.932 0.032 255.585);
 
-        --radius-lg: 0.5rem;
-        --radius-xs: calc(var(--radius-lg) * 0.5);
-        --radius-sm: calc(var(--radius-lg) * 0.75);
-        --radius-md: calc(var(--radius-lg) * 0.9);
-        --radius-xl: calc(var(--radius-lg) * 1.25);
-        --radius-2xl: calc(var(--radius-lg) * 1.5);
-        --radius-3xl: calc(var(--radius-lg) * 2);
-        --radius-4xl: calc(var(--radius-lg) * 3);
+        --radius: 0.5rem;
     }
+
     .dark {
-        --bg: hsl(240 10% 3.92%);
-        --fg: hsl(0 0% 98.04%);
-        --primary: hsl(221.2 83.2% 53.3%);
-        --primary-fg: hsl(0 0% 98.04%);
+        --bg: oklch(0.21 0.006 285.885);
+        --fg: oklch(0.985 0 0);
         --secondary: hsl(226.2 57% 21%);
         --secondary-fg: hsl(211.7 96.4% 78.4%);
         --danger: hsl(0 72.2% 50.6%);
         --danger-fg: hsl(0 0% 98.04%);
         --success: hsl(142.1 76.2% 36.3%);
         --success-fg: hsl(0 0% 98.04%);
+        --info: hsl(292.19, 84.08%, 60.59%);
+        --info-fg: hsl(0 0% 98.04%);
         --warning: hsl(17.5 88.3% 40.4%);
         --warning-fg: hsl(0 0% 98.04%);
-        --muted: hsl(240 3.7% 15.88%);
-        --muted-fg: hsl(240 5.03% 64.9%);
-
-        --chart-1: oklch(0.488 0.243 264.376);
-        --chart-2: oklch(0.623 0.214 259.815);
-        --chart-3: oklch(0.707 0.165 254.624);
-        --chart-4: oklch(0.809 0.105 251.813);
-        --chart-5: oklch(0.882 0.059 254.128);
+        --muted: oklch(0.37 0.013 285.805);
+        --muted-fg: oklch(0.871 0.006 286.286);
     }
 }
 
 @layer base {
-    html {
-        scroll-behavior: smooth;
-    }
-
     *,
     ::after,
     ::before,
     ::backdrop,
     ::file-selector-button {
         border-color: var(--muted, currentColor);
-    }
-
-    button:not(:disabled),
-    [role='button']:not(:disabled) {
-        cursor: pointer;
+        scroll-behavior: smooth;
     }
 
     body {
         background-color: var(--bg);
         color: var(--fg);
-    }
-
-    * {
-        font-feature-settings: 'cv11', 'ss01';
-        font-variation-settings: 'opsz' 850;
-        text-rendering: optimizeLegibility;
     }
 
     *::-webkit-scrollbar {
@@ -145,31 +132,13 @@
 }
 
 @layer components {
-    .overflow-auto,
-    .overflow-x-auto,
-    .overflow-y-auto,
-    .overflow-scroll,
-    .overflow-x-scroll,
-    .overflow-y-scroll {
-        @apply [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-inherit;
-    }
-
-    .overflow-auto:hover,
-    .overflow-x-auto:hover,
-    .overflow-y-auto:hover,
-    .overflow-scroll:hover,
-    .overflow-x-scroll:hover,
-    .overflow-y-scroll:hover {
-        @apply [&::-webkit-scrollbar-thumb]:bg-muted;
-    }
-
     .no-scrollbar {
         -ms-overflow-style: none; /* Internet Explorer and Edge */
         scrollbar-width: none; /* Firefox */
-    }
 
-    .no-scrollbar::-webkit-scrollbar {
-        display: none; /* Safari and Chrome */
+        ::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+        }
     }
 
     pre::-webkit-scrollbar {
