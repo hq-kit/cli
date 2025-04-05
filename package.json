@@ -17,7 +17,7 @@
     },
     "homepage": "https://hq-ui.vercel.app",
     "scripts": {
-        "rp": "npm uninstall hq-icons clsx cmdk embla-carousel-react framer-motion input-otp react-aria-components sonner tailwind-merge tailwind-variants tailwindcss-animate tailwindcss-react-aria-components lexical @lexical/react",
+        "rp": "npm uninstall hq-icons clsx cmdk embla-carousel-react motion input-otp react-aria-components sonner tailwind-merge tailwind-variants tailwindcss-animate tailwindcss-react-aria-components lexical @lexical/react",
         "clean": "rimraf tailwind.config.js && rimraf tailwind.config.ts && rimraf hq.json && rimraf src/styles && rimraf src/index.css && rimraf src/app && rimraf app && rimraf styles/app.css && rimraf src/app/globals.css && rimraf app/globals.css && rimraf src/components && rimraf styles && rimraf resources && rimraf src/components && rimraf components && rimraf lib && rimraf src/lib && npm run rp",
         "dev": "tsup --watch",
         "start": "tsc && npm link",
