@@ -63,6 +63,10 @@ export async function init() {
         fs.mkdirSync(uiFolder, { recursive: true })
     }
 
+    if (!fs.existsSync(libFolder)) {
+        fs.mkdirSync(libFolder, { recursive: true })
+    }
+
     const config = { $schema: 'https://hq-ui.vercel.app', ui: uiFolder, css: cssLocation, lib: libFolder }
 
     const spinner = ora(`Initializing HQ...`).start()
