@@ -1,5 +1,7 @@
 # Changelog
 
+## <small>1.0.2 (2025-04-15)</small>
+
 ## <small>0.0.25 (2025-04-15)</small>
 
 ## <small>0.0.23 (2025-04-05)</small>
