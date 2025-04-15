@@ -1,5 +1,7 @@
 # Changelog
 
+## <small>0.0.25 (2025-04-15)</small>
+
 ## <small>0.0.23 (2025-04-05)</small>
 
 ## [0.0.21](https://github.com/hq-kit/cli/compare/v0.0.20...v0.0.21) (2025-02-06)
