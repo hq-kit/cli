@@ -18,11 +18,11 @@ export const components: Component[] = [
     // ------------------------------------------------------------------------------------- //
     { name: 'divider' },
 
-    { name: 'menu' },
-    { name: 'list-box' },
-    { name: 'tag-group', children: [{ name: 'field' }, { name: 'badge' }] },
-    { name: 'table', children: [{ name: 'checkbox' }] },
-    { name: 'grid-list', children: [{ name: 'checkbox' }] },
+    { name: 'menu', children: [{ name: 'keyboard' }] },
+    { name: 'list-box', children: [{ name: 'collections' }] },
+    { name: 'tag-group', children: [{ name: 'field' }, { name: 'badge' }, { name: 'collections' }] },
+    { name: 'table', children: [{ name: 'checkbox' }, { name: 'collections' }] },
+    { name: 'grid-list', children: [{ name: 'checkbox' }, { name: 'collections' }] },
     { name: 'tree' },
 
     // ------------------------------------------------------------------------------------- //
@@ -116,7 +116,7 @@ export const components: Component[] = [
 
     { name: 'avatar' },
     { name: 'carousel' },
-    { name: 'user' },
+    { name: 'user', children: [{ name: 'avatar' }] },
 
     // ------------------------------------------------------------------------------------- //
     // ⌘ The children of Overlays
