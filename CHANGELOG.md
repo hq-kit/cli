@@ -1,5 +1,9 @@
 # Changelog
 
+## <small>1.0.3 (2025-04-23)</small>
+
+* chore: update ([23c119e](https://github.com/hq-kit/cli/commit/23c119e))
+
 ## <small>1.0.2 (2025-04-15)</small>
 
 ## <small>0.0.25 (2025-04-15)</small>
