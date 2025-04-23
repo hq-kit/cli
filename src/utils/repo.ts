@@ -5,7 +5,7 @@ const getRepoUrlForComponent = (componentName: string) => {
   return repoUrl;
 };
 
-const cssSource = `${rootUrl}/lib/styles/app.css`;
+const cssSource = `${rootUrl}/lib/styles/default.css`;
 const utilsSource = `${rootUrl}/lib/utils/index.ts`;
 const hooksSource = `${rootUrl}/lib/hooks/index.ts`;
 
