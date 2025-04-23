@@ -1,111 +1,110 @@
 {
-    "name": "hq-kit",
-    "type": "module",
-    "version": "1.0.2",
-    "description": "The command line interface for HQ UI.",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/hq-kit/cli.git"
+  "name": "hq-kit",
+  "type": "module",
+  "version": "1.0.2",
+  "description": "The command line interface for HQ UI.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hq-kit/cli.git"
+  },
+  "files": ["dist", "src"],
+  "main": "./dist/index.js",
+  "bin": {
+    "hq-kit": "./dist/index.js"
+  },
+  "homepage": "https://hq-ui.vercel.app",
+  "scripts": {
+    "rp": "npm uninstall hq-icons tailwindcss clsx cmdk embla-carousel-react motion recharts input-otp react-aria-components tailwind-variants tailwindcss-animate tailwindcss-react-aria-components lexical @lexical/react",
+    "clean": "rimraf hq.json && rimraf src/styles && rimraf src/index.css && rimraf src/app && rimraf app && rimraf styles/app.css && rimraf src/app/globals.css && rimraf app/globals.css && rimraf src/components && rimraf styles && rimraf resources && rimraf src/components && rimraf components && rimraf lib && rimraf src/lib && npm run rp",
+    "dev": "tsup --watch",
+    "start": "tsc && npm link",
+    "format": "biome lint --fix && biome check --write",
+    "format:unsafe": "biome check --unsafe --write",
+    "build": "tsup && npm run format",
+    "preview": "npm run clean && npm run build && npm link",
+    "pre": "chmod a+x dist/index.js",
+    "release": "export GITHUB_TOKEN=$(cat .github_token) && release-it"
+  },
+  "keywords": [
+    "cli",
+    "hq-kit-ui",
+    "hq-kit",
+    "cleon",
+    "cleon-ui",
+    "design-system"
+  ],
+  "author": "Diqi Al-Haqqi",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "@types/babel__core": "^7.20.5",
+    "@types/diff": "^7.0.2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.14.1",
+    "husky": "^9.1.7",
+    "release-it": "^18.1.2",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@antfu/ni": "^24.3.0",
+    "@babel/core": "^7.26.10",
+    "@babel/parser": "^7.27.0",
+    "@babel/plugin-transform-typescript": "^7.27.0",
+    "@inquirer/prompts": "^7.4.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "diff": "^7.0.0",
+    "embla-carousel-autoplay": "^8.6.0",
+    "node-fetch": "^3.3.2",
+    "ora": "^8.2.0",
+    "recast": "^0.23.11",
+    "ts-morph": "^25.0.1"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
     },
-    "files": [
-        "dist",
-        "src"
-    ],
-    "main": "./dist/index.js",
-    "bin": {
-        "hq-kit": "./dist/index.js"
+    "github": {
+      "release": true
     },
-    "homepage": "https://hq-ui.vercel.app",
-    "scripts": {
-        "rp": "npm uninstall hq-icons clsx cmdk embla-carousel-react motion input-otp react-aria-components sonner tailwind-merge tailwind-variants tailwindcss-animate tailwindcss-react-aria-components lexical @lexical/react",
-        "clean": "rimraf tailwind.config.js && rimraf tailwind.config.ts && rimraf hq.json && rimraf src/styles && rimraf src/index.css && rimraf src/app && rimraf app && rimraf styles/app.css && rimraf src/app/globals.css && rimraf app/globals.css && rimraf src/components && rimraf styles && rimraf resources && rimraf src/components && rimraf components && rimraf lib && rimraf src/lib && npm run rp",
-        "dev": "tsup --watch",
-        "start": "tsc && npm link",
-        "format": "prettier --write \"src/**/*.ts\"",
-        "build": "tsup && npm run format",
-        "preview": "npm run clean && npm run build && npm link",
-        "pre": "chmod a+x dist/index.js",
-        "release": "export GITHUB_TOKEN=$(cat .github_token) && release-it"
+    "npm": {
+      "publish": false
     },
-    "keywords": [
-        "cli",
-        "hq-kit-ui",
-        "hq-kit",
-        "cleon",
-        "cleon-ui",
-        "design-system"
-    ],
-    "author": "Diqi Al-Haqqi",
-    "license": "MIT",
-    "devDependencies": {
-        "@commitlint/cli": "^19.8.0",
-        "@commitlint/config-conventional": "^19.8.0",
-        "@release-it/conventional-changelog": "^10.0.0",
-        "@types/babel__core": "^7.20.5",
-        "@types/diff": "^7.0.2",
-        "@types/fs-extra": "^11.0.4",
-        "@types/node": "^22.14.0",
-        "husky": "^9.1.7",
-        "prettier": "^3.5.3",
-        "release-it": "^18.1.2",
-        "rimraf": "^6.0.1",
-        "tsup": "^8.4.0",
-        "typescript": "^5.8.3"
+    "publishConfig": {
+      "access": "public",
+      "registry": "https://npm.pkg.github.com"
     },
-    "dependencies": {
-        "@antfu/ni": "^23.3.1",
-        "@babel/core": "^7.26.10",
-        "@babel/parser": "^7.27.0",
-        "@babel/plugin-transform-typescript": "^7.27.0",
-        "@inquirer/prompts": "^7.4.1",
-        "chalk": "^5.4.1",
-        "commander": "^13.1.0",
-        "diff": "^7.0.0",
-        "node-fetch": "^3.3.2",
-        "ora": "^8.2.0",
-        "recast": "^0.23.11",
-        "ts-morph": "^25.0.1"
-    },
-    "release-it": {
-        "git": {
-            "commitMessage": "chore: release ${version}",
-            "tagName": "v${version}"
-        },
-        "github": {
-            "release": true
-        },
-        "npm": {
-            "publish": false
-        },
-        "publishConfig": {
-            "access": "public",
-            "registry": "https://npm.pkg.github.com"
-        },
-        "plugins": {
-            "@release-it/conventional-changelog": {
-                "infile": "CHANGELOG.md",
-                "preset": {
-                    "name": "conventionalcommits",
-                    "types": [
-                        {
-                            "type": "feat",
-                            "section": "Features"
-                        },
-                        {
-                            "type": "fix",
-                            "section": "Bug Fixes"
-                        },
-                        {
-                            "type": "refactor",
-                            "section": "Refactors"
-                        },
-                        {
-                            "type": "chore",
-                            "section": "Chores"
-                        }
-                    ]
-                }
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "infile": "CHANGELOG.md",
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            },
+            {
+              "type": "refactor",
+              "section": "Refactors"
+            },
+            {
+              "type": "chore",
+              "section": "Chores"
             }
+          ]
         }
+      }
     }
+  }
 }

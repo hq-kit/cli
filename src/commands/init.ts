@@ -1,182 +1,164 @@
-import { input } from '@inquirer/prompts'
-import chalk from 'chalk'
-import { spawn } from 'child_process'
-import fs from 'fs'
-import ora from 'ora'
-import path from 'path'
-import { fileURLToPath } from 'url'
-import { getPackageManager } from '../utils/get-package-manager'
+import { spawn } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import { input } from '@inquirer/prompts';
+import chalk from 'chalk';
+import ora from 'ora';
+import { writeFile, writeProviders } from '../utils';
+import { getPackageManager } from '../utils/get-package-manager';
 import {
-    isLaravel,
-    isNextJs,
-    isRemix,
-    isTypescript,
-    isVite,
-    possibilityComponentsPath,
-    possibilityCssPath,
-    possibilityLibPath,
-} from '../utils/helpers'
-import { transformTsxToJsx } from '../utils/transform-jsx'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-export const resourceDir = path.resolve(__dirname, '../src/resources')
-export const stubsDir = path.resolve(__dirname, '../src/resources/stubs')
+  isAstro,
+  isLaravel,
+  isNextJs,
+  isRemix,
+  isVite,
+  possibilityComponentsPath,
+  possibilityCssPath,
+  possibilityLibPath,
+} from '../utils/helpers';
+import { cssSource, hooksSource, utilsSource } from '../utils/repo';
 
 export async function init() {
-    let componentFolder: string, uiFolder: string, cssLocation: string, providers: string, libFolder: string
+  let componentFolder: string;
+  let uiFolder: string;
+  let cssLocation: string;
+  let libFolder: string;
 
-    componentFolder = await input({
-        message: 'Enter the path to your components folder:',
-        default: possibilityComponentsPath(),
-        validate: (value) => value.trim() !== '' || 'Path cannot be empty. Please enter a valid path.',
-    })
+  componentFolder = await input({
+    message: 'Enter the path to your components folder:',
+    default: possibilityComponentsPath(),
+    validate: (value) =>
+      value.trim() !== '' || 'Path cannot be empty. Please enter a valid path.',
+  });
 
-    uiFolder = path.join(componentFolder, 'ui')
+  uiFolder = path.join(componentFolder, 'ui');
 
-    libFolder = await input({
-        message: 'Enter the path to your library folder:',
-        default: possibilityLibPath(),
-        validate: (value) => value.trim() !== '' || 'Path cannot be empty. Please enter a valid path.',
-    })
+  libFolder = await input({
+    message: 'Enter the path to your lib folder:',
+    default: possibilityLibPath(),
+    validate: (value) =>
+      value.trim() !== '' || 'Path cannot be empty. Please enter a valid path.',
+  });
 
-    cssLocation = await input({
-        message: 'Where would you like to place the CSS file?',
-        default: possibilityCssPath(),
-        validate: (value) => value.trim() !== '' || 'Path cannot be empty. Please enter a valid path.',
-    })
+  cssLocation = await input({
+    message: 'Where would you like to place the CSS file?',
+    default: possibilityCssPath(),
+    validate: (value) =>
+      value.trim() !== '' || 'Path cannot be empty. Please enter a valid path.',
+  });
 
-    const utilsSourceFile = isTypescript() ? path.join(stubsDir, 'utils.stub') : path.join(stubsDir, 'utils-js.stub')
-    const hooksSourceFile = isTypescript() ? path.join(stubsDir, 'hooks.stub') : path.join(stubsDir, 'hooks-js.stub')
+  if (!fs.existsSync(uiFolder)) {
+    fs.mkdirSync(uiFolder, { recursive: true });
+  }
 
-    if (isNextJs()) {
-        providers = path.join(stubsDir, 'next/providers.stub')
-    } else if (isLaravel()) {
-        providers = path.join(stubsDir, 'laravel/providers.stub')
-    } else if (isRemix()) {
-        providers = path.join(stubsDir, 'remix/providers.stub')
-    } else {
-        providers = path.join(stubsDir, 'vite/providers.stub')
-    }
+  if (!fs.existsSync(libFolder)) {
+    fs.mkdirSync(libFolder, { recursive: true });
+  }
 
-    if (!fs.existsSync(uiFolder)) {
-        fs.mkdirSync(uiFolder, { recursive: true })
-    }
+  const config = {
+    $schema: 'https://hq-ui.vercel.app/schema.json',
+    ui: uiFolder,
+    css: cssLocation,
+    lib: libFolder,
+  };
 
-    if (!fs.existsSync(libFolder)) {
-        fs.mkdirSync(libFolder, { recursive: true })
-    }
+  const spinner = ora('Initializing HQ...').start();
 
-    const config = { $schema: 'https://hq-ui.vercel.app', ui: uiFolder, css: cssLocation, lib: libFolder }
+  // Handle CSS file placement (always overwrite)
+  if (!fs.existsSync(path.dirname(cssLocation))) {
+    fs.mkdirSync(path.dirname(cssLocation), { recursive: true });
+    spinner.succeed(
+      `Created directory for CSS at ${chalk.blue(path.dirname(cssLocation))}`,
+    );
+  }
 
-    const spinner = ora(`Initializing HQ...`).start()
+  const packageManager = await getPackageManager();
+  const mainPackages = [
+    'react-aria-components',
+    'hq-icons',
+    'tailwindcss',
+    'tailwindcss-react-aria-components',
+  ].join(' ');
+  let devPackages = ['tailwind-variants', 'clsx', 'tailwindcss-animate'].join(
+    ' ',
+  );
 
-    // Handle CSS file placement (always overwrite)
-    const cssSourcePath = path.join(resourceDir, 'app.css')
-    if (!fs.existsSync(path.dirname(cssLocation))) {
-        fs.mkdirSync(path.dirname(cssLocation), { recursive: true })
-        spinner.succeed(`Created directory for CSS at ${chalk.blue(path.dirname(cssLocation))}`)
-    }
+  if (isNextJs()) {
+    devPackages += ' next-themes @tailwindcss/postcss postcss';
+  }
 
-    if (fs.existsSync(cssSourcePath)) {
-        try {
-            const cssContent = fs.readFileSync(cssSourcePath, 'utf8')
-            fs.writeFileSync(cssLocation, cssContent, { flag: 'w' })
-            spinner.succeed(`CSS file copied to ${cssLocation}`)
-        } catch (error) {
-            spinner.fail(`Failed to write CSS file to ${cssLocation}`)
-        }
-    } else {
-        spinner.warn(`Source CSS file does not exist at ${cssSourcePath}`)
-    }
+  if (isLaravel() || isVite() || isAstro()) {
+    devPackages += ' @tailwindcss/vite';
+  }
 
-    const packageManager = await getPackageManager()
-    let mainPackages = ['react-aria-components', 'hq-icons', 'tailwindcss', 'tailwindcss-react-aria-components'].join(
-        ' ',
-    )
-    let devPackages = ['tailwind-variants', 'clsx', 'tailwindcss-animate'].join(' ')
+  if (isRemix()) {
+    devPackages += ' remix-themes';
+  }
 
-    if (isNextJs()) {
-        devPackages += ' next-themes @tailwindcss/postcss postcss'
-    }
+  const action = packageManager === 'npm' ? 'i' : 'add';
+  const installCommand = `${packageManager} ${action} ${mainPackages} && ${packageManager} ${action} -D ${devPackages}`;
 
-    if (isLaravel() || isVite()) {
-        devPackages += ' @tailwindcss/vite'
-    }
+  spinner.info('Installing dependencies...');
 
-    if (isRemix()) {
-        devPackages += ' remix-themes'
-    }
+  const child = spawn(installCommand, { stdio: 'inherit', shell: true });
 
-    const action = packageManager === 'npm' ? 'i' : 'add'
-    const installCommand = `${packageManager} ${action} ${mainPackages} && ${packageManager} ${action} -D ${devPackages}`
+  await new Promise<void>((resolve) => {
+    child.on('close', () => {
+      resolve();
+    });
+  });
 
-    spinner.info(`Installing dependencies...`)
+  // Write CSS file
+  try {
+    await writeFile(cssSource, cssLocation);
+    spinner.succeed(`CSS file copied to ${cssLocation}`);
+  } catch (error) {
+    spinner.fail(`Failed to write CSS file to ${cssLocation}`);
+  }
 
-    const child = spawn(installCommand, { stdio: 'inherit', shell: true })
+  // Write utils file
+  try {
+    await writeFile(utilsSource, path.join(libFolder, 'utils.ts'));
+    spinner.succeed(`utils file copied to ${libFolder}`);
+  } catch (error) {
+    spinner.fail('Error writing utils file');
+  }
 
-    await new Promise<void>((resolve) => {
-        child.on('close', () => {
-            resolve()
-        })
-    })
+  // Write hooks file
+  try {
+    await writeFile(hooksSource, path.join(libFolder, 'hooks.ts'));
+    spinner.succeed(`hooks file copied to ${libFolder}`);
+  } catch (error) {
+    spinner.fail('Error writing hooks file');
+  }
 
-    const utilsContent = fs.readFileSync(utilsSourceFile, 'utf8')
-    if (isTypescript()) {
-        fs.writeFileSync(path.join(libFolder, 'utils.ts'), utilsContent, { flag: 'w' })
-    } else {
-        fs.writeFileSync(path.join(libFolder, 'utils.js'), utilsContent, { flag: 'w' })
-    }
-    spinner.succeed(`utils file copied to ${libFolder}`)
+  // Write providers and theme-toggle file
+  try {
+    await writeProviders(componentFolder);
+    spinner.succeed(
+      `Theme provider and providers files copied to ${componentFolder}`,
+    );
+  } catch (error) {
+    spinner.fail(`Failed to write Providers file: ${(error as Error).message}`);
+  }
 
-    const hooksContent = fs.readFileSync(hooksSourceFile, 'utf8')
-    if (isTypescript()) {
-        fs.writeFileSync(path.join(libFolder, 'hooks.tsx'), hooksContent, { flag: 'w' })
-    } else {
-        fs.writeFileSync(path.join(libFolder, 'hooks.jsx'), hooksContent, { flag: 'w' })
-    }
-    spinner.succeed(`hooks file copied to ${libFolder}`)
+  // Save configuration to hq.json with relative path
+  if (fs.existsSync('hq.json')) {
+    fs.unlinkSync('hq.json');
+  }
 
-    try {
-        const providersContent = fs.readFileSync(providers, 'utf8')
-        if (isTypescript()) {
-            fs.writeFileSync(path.join(componentFolder, 'providers.tsx'), providersContent, { flag: 'w' })
-        } else {
-            const providersContentJsx = await transformTsxToJsx({
-                content: providersContent,
-                writePath: path.join(componentFolder, 'providers.jsx'),
-            })
-            fs.writeFileSync(path.join(componentFolder, 'providers.jsx'), providersContentJsx, { flag: 'w' })
-        }
+  fs.writeFileSync('hq.json', JSON.stringify(config, null, 2));
+  spinner.succeed('Configuration saved to hq.json');
 
-        spinner.succeed(`Theme provider and providers files copied to ${componentFolder}`)
-    } catch (error) {
-        // @ts-ignore
-        spinner.fail(`Failed to write Providers file: ${error.message}`)
-    }
+  // Wait for the installation to complete before proceeding
+  spinner.succeed('Installation complete.');
 
-    // Save configuration to hq.json with relative path
-    if (fs.existsSync('hq.json')) {
-        fs.unlinkSync('hq.json')
-    }
+  console.log(chalk.blueBright('========================'));
+  console.log('||  Happy coding!  🔥 ||');
+  console.log(chalk.blueBright('========================'));
 
-    fs.writeFileSync('hq.json', JSON.stringify(config, null, 2))
-    spinner.succeed('Configuration saved to hq.json')
+  console.info('\nNow try to add some components to your project');
+  console.info(`by running: ${chalk.blue('npx hq-kit add <component-name>')}`);
 
-    // Wait for the installation to complete before proceeding
-    spinner.succeed('Installation complete.')
-
-    const continuedToAddComponent = spawn('npx hq-kit add', { stdio: 'inherit', shell: true })
-
-    await new Promise<void>((resolve) => {
-        continuedToAddComponent.on('close', () => {
-            resolve()
-        })
-    })
-
-    console.log(chalk.blueBright('========================'))
-    console.log('||  Happy coding!  🔥 ||')
-    console.log(chalk.blueBright('========================'))
-
-    spinner.stop()
+  spinner.stop();
 }

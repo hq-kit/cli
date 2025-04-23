@@ -1,6 +1,6 @@
 import { IconMoon, IconSun } from 'hq-icons'
 import { Button } from '@/Components/ui'
-import { useTheme } from '@/Components/theme-provider'
+import { useTheme } from '@/Components/providers'
 
 export function ThemeToggle({ variant = 'outline' }: { variant: 'outline' | 'ghost' }) {
   const { theme, setTheme } = useTheme()
@@ -8,7 +8,7 @@ export function ThemeToggle({ variant = 'outline' }: { variant: 'outline' | 'gho
   return (
     <Button
         variant={variant}
-        size="icon"
+        icon
         aria-label={'Switch to ' + theme === 'light' ? 'dark' : 'light' + 'mode'}
         onPress={() => setTheme(theme === 'light' ? 'dark' : 'light')}
     >

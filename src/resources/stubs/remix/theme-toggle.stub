@@ -15,7 +15,7 @@ const switchTheme = () => {
 return (
   <Button
     variant={variant}
-    size="icon"
+    icon
     aria-label="Switch theme"
     onPress={switchTheme}
   >

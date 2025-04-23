@@ -1,160 +1,194 @@
 type Component = {
-    name: string
-    children?: Component[]
-}
+  name: string;
+  children?: Component[];
+};
 
 export const components: Component[] = [
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Buttons
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Buttons
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'button' },
-    { name: 'file-trigger', children: [{ name: 'button' }] },
-    { name: 'toggle' },
+  { name: 'button' },
+  { name: 'file-trigger', children: [{ name: 'button' }] },
+  { name: 'toggle' },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Collections
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Collections
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'menu', children: [{ name: 'keyboard' }] },
-    { name: 'list-box', children: [{ name: 'collections' }] },
-    { name: 'tag-group', children: [{ name: 'field' }, { name: 'badge' }, { name: 'collections' }] },
-    { name: 'table', children: [{ name: 'checkbox' }, { name: 'collections' }] },
-    { name: 'grid-list', children: [{ name: 'checkbox' }, { name: 'collections' }] },
-    { name: 'tree' },
+  { name: 'menu', children: [{ name: 'keyboard' }] },
+  { name: 'list-box', children: [{ name: 'collections' }] },
+  {
+    name: 'tag-group',
+    children: [{ name: 'field' }, { name: 'badge' }, { name: 'collections' }],
+  },
+  { name: 'table', children: [{ name: 'checkbox' }, { name: 'collections' }] },
+  {
+    name: 'grid-list',
+    children: [{ name: 'checkbox' }, { name: 'collections' }],
+  },
+  { name: 'tree' },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Colors
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Colors
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    {
-        name: 'color-picker',
-        children: [
-            { name: 'color-area' },
-            { name: 'color-field' },
-            { name: 'color-slider' },
-            { name: 'color-swatch' },
-            { name: 'field' },
-            { name: 'popover' },
-        ],
-    },
-    { name: 'color-field', children: [{ name: 'color-picker' }, { name: 'color-field' }, { name: 'field' }] },
-    { name: 'color-area', children: [{ name: 'color-thumb' }] },
-    { name: 'color-slider', children: [{ name: 'color-thumb' }, { name: 'field' }] },
-    { name: 'color-swatch-picker', children: [{ name: 'color-swatch' }] },
-    { name: 'color-wheel', children: [{ name: 'color-thumb' }] },
-    { name: 'color-swatch' },
+  {
+    name: 'color-picker',
+    children: [
+      { name: 'color-area' },
+      { name: 'color-field' },
+      { name: 'color-slider' },
+      { name: 'color-swatch' },
+      { name: 'field' },
+      { name: 'popover' },
+    ],
+  },
+  {
+    name: 'color-field',
+    children: [
+      { name: 'color-picker' },
+      { name: 'color-field' },
+      { name: 'field' },
+    ],
+  },
+  { name: 'color-area', children: [{ name: 'color-thumb' }] },
+  {
+    name: 'color-slider',
+    children: [{ name: 'color-thumb' }, { name: 'field' }],
+  },
+  { name: 'color-swatch-picker', children: [{ name: 'color-swatch' }] },
+  { name: 'color-wheel', children: [{ name: 'color-thumb' }] },
+  { name: 'color-swatch' },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Controls
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Controls
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'slider', children: [{ name: 'field' }] },
-    { name: 'switch', children: [{ name: 'field' }] },
-    { name: 'toolbar', children: [{ name: 'toggle' }] },
-    { name: 'command', children: [{ name: 'separator' }, { name: 'keyboard' }] },
-    { name: 'context-menu', children: [{ name: 'menu' }] },
+  { name: 'slider', children: [{ name: 'field' }] },
+  { name: 'switch', children: [{ name: 'field' }] },
+  { name: 'toolbar', children: [{ name: 'toggle' }] },
+  { name: 'command', children: [{ name: 'modal' }, { name: 'separator' }, { name: 'keyboard' }] },
+  { name: 'context-menu', children: [{ name: 'menu' }] },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Date and Time
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Date and Time
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'calendar', children: [{ name: 'button' }, { name: 'menu' }] },
-    { name: 'range-calendar', children: [{ name: 'calendar' }] },
-    { name: 'date-field', children: [{ name: 'field' }] },
-    { name: 'time-field', children: [{ name: 'date-field' }] },
-    { name: 'date-picker', children: [{ name: 'popover' }, { name: 'date-field' }, { name: 'range-calendar' }] },
-    { name: 'date-range-picker', children: [{ name: 'date-picker' }] },
+  { name: 'calendar', children: [{ name: 'button' }, { name: 'menu' }] },
+  { name: 'range-calendar', children: [{ name: 'calendar' }] },
+  { name: 'date-field', children: [{ name: 'field' }] },
+  { name: 'time-field', children: [{ name: 'date-field' }] },
+  {
+    name: 'date-picker',
+    children: [
+      { name: 'popover' },
+      { name: 'date-field' },
+      { name: 'range-calendar' },
+    ],
+  },
+  { name: 'date-range-picker', children: [{ name: 'date-picker' }] },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Forms
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Forms
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'form' },
-    { name: 'text-field', children: [{ name: 'field' }] },
-    { name: 'search-field', children: [{ name: 'field' }] },
-    { name: 'textarea', children: [{ name: 'field' }] },
-    { name: 'otp' },
-    { name: 'number-field', children: [{ name: 'field' }] },
-    { name: 'checkbox', children: [{ name: 'field' }] },
-    { name: 'radio', children: [{ name: 'field' }] },
-    { name: 'selection-box', children: [{ name: 'field' }] },
-    { name: 'drop-zone' },
-    { name: 'rich-text-field', children: [{ name: 'toolbar' }, { name: 'menu' }] },
+  { name: 'form' },
+  { name: 'text-field', children: [{ name: 'field' }] },
+  { name: 'search-field', children: [{ name: 'field' }] },
+  { name: 'textarea', children: [{ name: 'field' }] },
+  { name: 'otp' },
+  { name: 'number-field', children: [{ name: 'field' }] },
+  { name: 'checkbox', children: [{ name: 'field' }] },
+  { name: 'radio', children: [{ name: 'field' }] },
+  { name: 'selection-box', children: [{ name: 'field' }] },
+  { name: 'drop-zone' },
+  {
+    name: 'rich-text-field',
+    children: [{ name: 'toolbar' }, { name: 'menu' }],
+  },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Navigation
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Navigation
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'link' },
-    { name: 'breadcrumbs' },
-    { name: 'pagination' },
-    { name: 'tabs' },
-    { name: 'disclosure' },
+  { name: 'link' },
+  { name: 'breadcrumbs' },
+  { name: 'pagination' },
+  { name: 'tabs' },
+  { name: 'disclosure' },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Surfaces
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Surfaces
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'card' },
-    { name: 'separator' },
-    { name: 'spoiler', children: [{ name: 'button' }] },
-    { name: 'description-list' },
+  { name: 'card' },
+  { name: 'separator' },
+  { name: 'spoiler', children: [{ name: 'button' }] },
+  { name: 'description-list' },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Media
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Media
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'avatar' },
-    { name: 'carousel' },
-    { name: 'user', children: [{ name: 'avatar' }] },
+  { name: 'avatar' },
+  { name: 'carousel' },
+  { name: 'user', children: [{ name: 'avatar' }] },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Overlays
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Overlays
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'modal' },
-    { name: 'sheet' },
-    { name: 'popover' },
-    { name: 'tooltip' },
+  { name: 'modal' },
+  { name: 'sheet' },
+  { name: 'popover' },
+  { name: 'tooltip' },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Pickers
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Pickers
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'combo-box', children: [{ name: 'field' }] },
-    { name: 'select', children: [{ name: 'field' }] },
-    { name: 'multi-select', children: [{ name: 'field' }] },
+  { name: 'combo-box', children: [{ name: 'field' }] },
+  { name: 'select', children: [{ name: 'field' }] },
+  { name: 'multi-select', children: [{ name: 'field' }] },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Statuses
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Statuses
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'badge' },
-    { name: 'note' },
-    { name: 'progress', children: [{ name: 'field' }] },
-    { name: 'meter', children: [{ name: 'field' }] },
-    { name: 'toast' },
-    { name: 'chart' },
+  { name: 'badge' },
+  { name: 'note' },
+  { name: 'progress', children: [{ name: 'field' }] },
+  { name: 'meter', children: [{ name: 'field' }] },
+  { name: 'toast' },
+  { name: 'chart' },
 
-    // ------------------------------------------------------------------------------------- //
-    // ⌘ The children of Layouts
-    // ------------------------------------------------------------------------------------- //
-    { name: 'divider' },
+  // ------------------------------------------------------------------------------------- //
+  // ⌘ The children of Layouts
+  // ------------------------------------------------------------------------------------- //
+  { name: 'divider' },
 
-    { name: 'container' },
-    { name: 'sidebar', children: [{ name: 'button' }, { name: 'sheet' }, { name: 'badge' }, { name: 'tooltip' }] },
-    { name: 'navbar', children: [{ name: 'button' }, { name: 'sheet' }] },
-]
+  { name: 'container' },
+  {
+    name: 'sidebar',
+    children: [
+      { name: 'button' },
+      { name: 'sheet' },
+      { name: 'badge' },
+      { name: 'tooltip' },
+    ],
+  },
+  { name: 'navbar', children: [{ name: 'button' }, { name: 'sheet' }] },
+];
