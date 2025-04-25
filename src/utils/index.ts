@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import chalk from 'chalk';
 import {
   getUIPath,
@@ -10,6 +11,10 @@ import {
   isTypescript,
 } from './helpers';
 import { transformTsxToJsx } from './transform-jsx';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const stubsDir = path.resolve(__dirname, '../../src/resources/stubs');
 
 export function getWriteComponentPath(componentName: string): string {
   const uiFolder = getUIPath();
@@ -33,7 +38,7 @@ export async function writeFile(url: string, writePath: string) {
   fs.writeFileSync(filePath, content, { flag: 'w' });
 }
 
-const stubsDir = path.resolve(__dirname, '../src/resources/stubs');
+
 
 export async function writeProviders(componentFolder: string) {
   let providersStubLocation: string;

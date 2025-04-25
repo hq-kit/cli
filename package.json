@@ -1,23 +1,20 @@
 {
   "name": "hq-kit",
   "type": "module",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "The command line interface for HQ UI.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hq-kit/cli.git"
   },
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "main": "./dist/index.js",
   "bin": {
     "hq-kit": "./dist/index.js"
   },
   "homepage": "https://hq-ui.vercel.app",
   "scripts": {
-    "rp": "npm uninstall hq-icons tailwindcss clsx cmdk embla-carousel-react motion recharts input-otp react-aria-components tailwind-variants tailwindcss-animate tailwindcss-react-aria-components lexical @lexical/react",
+    "rp": "npm uninstall hq-icons tailwindcss clsx cmdk embla-carousel-react embla-carousel-autoplay motion recharts input-otp react-aria-components tailwind-variants tailwindcss-animate tailwindcss-react-aria-components lexical @lexical/react",
     "clean": "rimraf hq.json && rimraf src/styles && rimraf src/index.css && rimraf src/app && rimraf app && rimraf styles/app.css && rimraf src/app/globals.css && rimraf app/globals.css && rimraf src/components && rimraf styles && rimraf resources && rimraf src/components && rimraf components && rimraf lib && rimraf src/lib && npm run rp",
     "dev": "tsup --watch",
     "start": "tsc && npm link",
@@ -47,9 +44,12 @@
     "@types/diff": "^7.0.2",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.14.1",
+    "clsx": "^2.1.1",
     "husky": "^9.1.7",
     "release-it": "^18.1.2",
     "rimraf": "^6.0.1",
+    "tailwind-variants": "^1.0.0",
+    "tailwindcss-animate": "^1.0.7",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3"
   },
@@ -62,10 +62,13 @@
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
     "diff": "^7.0.0",
-    "embla-carousel-autoplay": "^8.6.0",
+    "hq-icons": "^0.0.10",
     "node-fetch": "^3.3.2",
     "ora": "^8.2.0",
+    "react-aria-components": "^1.8.0",
     "recast": "^0.23.11",
+    "tailwindcss": "^4.1.4",
+    "tailwindcss-react-aria-components": "^2.0.0",
     "ts-morph": "^25.0.1"
   },
   "release-it": {
