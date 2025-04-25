@@ -1,6 +1,0 @@
-{
-  "$schema": "https://hq-ui.vercel.app/schema.json",
-  "ui": "components/ui",
-  "css": "src/index.css",
-  "lib": "lib"
-}

@@ -14,7 +14,7 @@ import { transformTsxToJsx } from './transform-jsx';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const stubsDir = path.resolve(__dirname, '../../src/resources/stubs');
+const stubsDir = path.resolve(__dirname, '../src/resources/stubs');
 
 export function getWriteComponentPath(componentName: string): string {
   const uiFolder = getUIPath();
@@ -37,8 +37,6 @@ export async function writeFile(url: string, writePath: string) {
 
   fs.writeFileSync(filePath, content, { flag: 'w' });
 }
-
-
 
 export async function writeProviders(componentFolder: string) {
   let providersStubLocation: string;
