@@ -1,5 +1,9 @@
 # Changelog
 
+## <small>1.0.8 (2025-04-25)</small>
+
+* chore: components auto update ([f7622bb](https://github.com/hq-kit/cli/commit/f7622bb))
+
 ## <small>1.0.7 (2025-04-25)</small>
 
 * chore: fix new update ([afcda81](https://github.com/hq-kit/cli/commit/afcda81))
