@@ -1,5 +1,9 @@
 # Changelog
 
+## <small>1.0.9 (2025-04-25)</small>
+
+* chore: fix publish package ([1881f8f](https://github.com/hq-kit/cli/commit/1881f8f))
+
 ## <small>1.0.8 (2025-04-25)</small>
 
 * chore: components auto update ([f7622bb](https://github.com/hq-kit/cli/commit/f7622bb))
