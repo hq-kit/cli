@@ -34,7 +34,9 @@
     "hq-kit",
     "cleon",
     "cleon-ui",
-    "design-system"
+    "design-system",
+    "react-ui",
+    "react-aria-components"
   ],
   "author": "Diqi Al-Haqqi",
   "license": "MIT",
@@ -64,6 +66,7 @@
     "diff": "^7.0.0",
     "node-fetch": "^3.3.2",
     "ora": "^8.2.0",
+    "react-stately": "^3.37.0",
     "recast": "^0.23.11",
     "ts-morph": "^25.0.1"
   },

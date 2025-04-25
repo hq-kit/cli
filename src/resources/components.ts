@@ -1,5 +1,6 @@
 type Component = {
   name: string;
+  deps?: string[];
   children?: Component[];
 };
 
@@ -18,7 +19,7 @@ export const components: Component[] = [
   // ------------------------------------------------------------------------------------- //
   { name: 'divider' },
 
-  { name: 'menu', children: [{ name: 'keyboard' }] },
+  { name: 'menu', children: [{ name: 'keyboard' }], deps: ['motion'] },
   { name: 'list-box', children: [{ name: 'collections' }] },
   {
     name: 'tag-group',
@@ -103,7 +104,7 @@ export const components: Component[] = [
   { name: 'text-field', children: [{ name: 'field' }] },
   { name: 'search-field', children: [{ name: 'field' }] },
   { name: 'textarea', children: [{ name: 'field' }] },
-  { name: 'otp' },
+  { name: 'otp', deps: ['input-otp'] },
   { name: 'number-field', children: [{ name: 'field' }] },
   { name: 'checkbox', children: [{ name: 'field' }] },
   { name: 'radio', children: [{ name: 'field' }] },
@@ -112,6 +113,7 @@ export const components: Component[] = [
   {
     name: 'rich-text-field',
     children: [{ name: 'toolbar' }, { name: 'menu' }],
+    deps: ['lexical @lexical/react'],
   },
 
   // ------------------------------------------------------------------------------------- //
@@ -132,7 +134,7 @@ export const components: Component[] = [
 
   { name: 'card' },
   { name: 'separator' },
-  { name: 'spoiler', children: [{ name: 'button' }] },
+  { name: 'spoiler', children: [{ name: 'button' }], deps: ['motion'] },
   { name: 'description-list' },
 
   // ------------------------------------------------------------------------------------- //
@@ -141,7 +143,7 @@ export const components: Component[] = [
   { name: 'divider' },
 
   { name: 'avatar' },
-  { name: 'carousel' },
+  { name: 'carousel', deps: ['embla-carousel-react embla-carousel-autoplay'] },
   { name: 'user', children: [{ name: 'avatar' }] },
 
   // ------------------------------------------------------------------------------------- //
@@ -149,9 +151,9 @@ export const components: Component[] = [
   // ------------------------------------------------------------------------------------- //
   { name: 'divider' },
 
-  { name: 'modal' },
-  { name: 'sheet' },
-  { name: 'popover' },
+  { name: 'modal', deps: ['motion'] },
+  { name: 'sheet', deps: ['motion'] },
+  { name: 'popover', deps: ['motion'] },
   { name: 'tooltip' },
 
   // ------------------------------------------------------------------------------------- //
@@ -170,10 +172,10 @@ export const components: Component[] = [
 
   { name: 'badge' },
   { name: 'note' },
-  { name: 'progress', children: [{ name: 'field' }] },
-  { name: 'meter', children: [{ name: 'field' }] },
-  { name: 'toast' },
-  { name: 'chart' },
+  { name: 'progress', children: [{ name: 'field' }], deps: ['motion'] },
+  { name: 'meter', children: [{ name: 'field' }], deps: ['motion'] },
+  { name: 'toast', deps: ['motion'] },
+  { name: 'chart', deps: ['recharts'] },
 
   // ------------------------------------------------------------------------------------- //
   // ⌘ The children of Layouts

@@ -1,13 +1,16 @@
+import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { Separator, checkbox } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
-import { components } from '../resources/components';
 import { getWriteComponentPath, writeExports, writeFile } from '../utils';
-import { additionalDeps } from '../utils/additional-deps';
 import { getPackageManager } from '../utils/get-package-manager';
-import { getRepoUrlForComponent } from '../utils/repo';
+import {
+  type Component,
+  fetchComponentList,
+  getRepoUrlForComponent,
+} from '../utils/repo';
 
 async function createComponent(componentName: string) {
   const writePath = getWriteComponentPath(componentName);
@@ -34,7 +37,7 @@ async function processComponent(
   packageManager: string,
   action: string,
   processed: Set<string>,
-  allComponents: { name: string; children?: { name: string }[] }[],
+  allComponents: Component[],
   override: boolean,
   isChild = false,
 ) {
@@ -54,12 +57,15 @@ async function processComponent(
 
   processed.add(componentName);
 
+  const component = allComponents.find((c) => c.name === componentName);
+
   if (!fs.existsSync(componentPath)) {
-    await additionalDeps(componentName, packageManager, action);
+    if (component?.deps) {
+      await installDeps(component?.deps, packageManager, action);
+    }
     await createComponent(componentName);
   }
 
-  const component = allComponents.find((c) => c.name === componentName);
   if (component?.children) {
     for (const child of component.children) {
       await processComponent(
@@ -68,7 +74,7 @@ async function processComponent(
         action,
         processed,
         allComponents,
-        false,
+        true,
         true,
       );
     }
@@ -76,16 +82,16 @@ async function processComponent(
 }
 
 export async function add(options: { component: string }) {
+  const components = await fetchComponentList();
+
   const { component } = options;
   const exclude = ['utils'];
   let selectedComponents = component ? component.split(' ') : [];
+
   if (selectedComponents.length === 0) {
     const choices = components
       .filter((c) => !exclude.includes(c.name))
       .map((c) => {
-        if (c.name === 'divider') {
-          return new Separator();
-        }
         return { name: c.name, value: c.name };
       });
     selectedComponents = await checkbox({
@@ -121,4 +127,26 @@ export async function add(options: { component: string }) {
 
   // Generate index file
   writeExports();
+}
+
+async function installDeps(
+  deps: string[],
+  packageManager: string,
+  action: string,
+) {
+  const spinner = ora('Installing dependencies...').start();
+  const installCommand = `${packageManager} ${action} ${deps.join(' ')}`;
+  const child = spawn(installCommand, {
+    stdio: 'ignore',
+    shell: true,
+  });
+
+  await new Promise<void>((resolve) => {
+    child.on('close', () => {
+      spinner.stop();
+      resolve();
+    });
+  });
+
+  spinner.succeed('Dependencies installed');
 }

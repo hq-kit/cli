@@ -9,4 +9,26 @@ const cssSource = `${rootUrl}/lib/styles/default.css`;
 const utilsSource = `${rootUrl}/lib/utils/index.ts`;
 const hooksSource = `${rootUrl}/lib/hooks/index.ts`;
 
-export { cssSource, utilsSource, hooksSource, getRepoUrlForComponent };
+type Component = {
+  name: string;
+  deps?: string[];
+  children?: Component[];
+};
+
+async function fetchComponentList(): Promise<Component[]> {
+  const response = await fetch(
+    `${rootUrl}/components/docs/generated/components.json`,
+  );
+  const data = await response.text();
+  const components = JSON.parse(data);
+  return components;
+}
+
+export {
+  cssSource,
+  utilsSource,
+  hooksSource,
+  getRepoUrlForComponent,
+  fetchComponentList,
+  type Component,
+};
