@@ -1,5 +1,9 @@
 # Changelog
 
+## <small>1.0.6 (2025-04-25)</small>
+
+* chore: fix new update ([4c527f0](https://github.com/hq-kit/cli/commit/4c527f0))
+
 ## <small>1.0.4 (2025-04-23)</small>
 
 * chore: update new ([d3d1119](https://github.com/hq-kit/cli/commit/d3d1119))
