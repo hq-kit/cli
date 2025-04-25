@@ -1,5 +1,10 @@
 # Changelog
 
+## <small>1.0.7 (2025-04-25)</small>
+
+* chore: fix new update ([afcda81](https://github.com/hq-kit/cli/commit/afcda81))
+* chore: fix new update ([dd8666e](https://github.com/hq-kit/cli/commit/dd8666e))
+
 ## <small>1.0.6 (2025-04-25)</small>
 
 * chore: fix new update ([4c527f0](https://github.com/hq-kit/cli/commit/4c527f0))
