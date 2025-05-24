@@ -10,6 +10,7 @@ const utilsSource = `${rootUrl}/lib/utils/index.ts`;
 const hooksSource = `${rootUrl}/lib/hooks/index.ts`;
 
 type Component = {
+  section: string;
   name: string;
   deps?: string[];
   children?: Component[];

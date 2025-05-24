@@ -73,22 +73,16 @@ export async function init() {
   }
 
   const packageManager = await getPackageManager();
-  const mainPackages = [
-    'react-aria-components',
-    'hq-icons',
-    'tailwindcss',
-    'tailwindcss-react-aria-components',
-  ].join(' ');
-  let devPackages = ['tailwind-variants', 'clsx', 'tailwindcss-animate'].join(
-    ' ',
-  );
+  const mainPackages = 'react-aria-components hq-icons';
+  let devPackages =
+    'tailwindcss tailwindcss-react-aria-components tailwind-variants clsx tw-animate-css';
 
   if (isNextJs()) {
     devPackages += ' next-themes @tailwindcss/postcss postcss';
   }
 
   if (isLaravel() || isVite() || isAstro()) {
-    devPackages += ' @tailwindcss/vite';
+    devPackages += ' @tailwindcss/vite @types/node';
   }
 
   if (isRemix()) {

@@ -81,19 +81,36 @@ async function processComponent(
   }
 }
 
+type componentType = {
+  section: string;
+  name: string;
+  value: string;
+};
+
 export async function add(options: { component: string }) {
   const components = await fetchComponentList();
 
   const { component } = options;
-  const exclude = ['utils'];
   let selectedComponents = component ? component.split(' ') : [];
 
   if (selectedComponents.length === 0) {
-    const choices = components
-      .filter((c) => !exclude.includes(c.name))
-      .map((c) => {
-        return { name: c.name, value: c.name };
+    const choices = [];
+    let currentSection = '';
+    for (const component of components.sort((a, b) =>
+      a.section.localeCompare(b.section),
+    )) {
+      if (component.section !== currentSection) {
+        choices.push({
+          type: 'separator',
+          separator: `== ${component.section.toUpperCase()} ==`,
+        });
+        currentSection = component.section;
+      }
+      choices.push({
+        name: component.name,
+        value: component.name,
       });
+    }
     selectedComponents = await checkbox({
       required: true,
       message: 'Choose components to add:',

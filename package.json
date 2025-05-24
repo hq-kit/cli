@@ -7,10 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/hq-kit/cli.git"
   },
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "main": "./dist/index.js",
   "bin": {
     "hq-kit": "./dist/index.js"
@@ -26,6 +23,9 @@
     "build": "tsup && npm run format",
     "preview": "npm run clean && npm run build && npm link",
     "pre": "chmod a+x dist/index.js",
+    "start:init": "npm run dist/index.js init",
+    "start:add": "npm run dist/index.js add",
+    "start:diff": "npm run dist/index.js diff",
     "release": "export GITHUB_TOKEN=$(cat .github_token) && release-it"
   },
   "keywords": [
@@ -42,31 +42,33 @@
   "license": "MIT",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@commitlint/cli": "^19.8.0",
-    "@commitlint/config-conventional": "^19.8.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@release-it/conventional-changelog": "^10.0.1",
+    "@tailwindcss/vite": "^4.1.7",
     "@types/babel__core": "^7.20.5",
     "@types/diff": "^7.0.2",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.14.1",
+    "@types/node": "^22.15.21",
     "husky": "^9.1.7",
     "release-it": "^18.1.2",
     "rimraf": "^6.0.1",
-    "tsup": "^8.4.0",
+    "tsup": "^8.5.0",
+    "tw-animate-css": "^1.3.0",
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@antfu/ni": "^24.3.0",
-    "@babel/core": "^7.26.10",
-    "@babel/parser": "^7.27.0",
-    "@babel/plugin-transform-typescript": "^7.27.0",
-    "@inquirer/prompts": "^7.4.1",
+    "@antfu/ni": "^24.4.0",
+    "@babel/core": "^7.27.1",
+    "@babel/parser": "^7.27.2",
+    "@babel/plugin-transform-typescript": "^7.27.1",
+    "@inquirer/prompts": "^7.5.2",
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
     "diff": "^7.0.0",
     "node-fetch": "^3.3.2",
     "ora": "^8.2.0",
-    "react-stately": "^3.37.0",
+    "react-stately": "^3.38.0",
     "recast": "^0.23.11",
     "ts-morph": "^25.0.1"
   },
