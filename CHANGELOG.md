@@ -1,5 +1,9 @@
 # Changelog
 
+## <small>1.0.10 (2025-05-24)</small>
+
+* chore: update ([a8e69b4](https://github.com/hq-kit/cli/commit/a8e69b4))
+
 ## <small>1.0.9 (2025-04-25)</small>
 
 * chore: fix publish package ([1881f8f](https://github.com/hq-kit/cli/commit/1881f8f))
