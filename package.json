@@ -71,5 +71,50 @@
     "react-stately": "^3.40.0",
     "recast": "^0.23.11",
     "ts-morph": "^25.0.1"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}",
+      "commit": true,
+      "push": true
+    },
+    "github": {
+      "release": true,
+      "tokenRef": "GITHUB_TOKEN"
+    },
+    "npm": {
+      "publish": false
+    },
+    "publishConfig": {
+      "access": "public",
+      "registry": "https://npm.pkg.github.com"
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "infile": "CHANGELOG.md",
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            },
+            {
+              "type": "refactor",
+              "section": "Refactors"
+            },
+            {
+              "type": "chore",
+              "section": "Chores"
+            }
+          ]
+        }
+      }
+    }
   }
 }
