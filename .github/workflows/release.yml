@@ -8,17 +8,16 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-      - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-      - name: Install dependencies
-        run: npm ci
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - name: Install dependencies with Bun
+        run: bun install
       - name: Run release-it
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx release-it --ci
+        run: bunx release-it --ci

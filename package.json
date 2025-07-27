@@ -76,6 +76,7 @@
     "git": {
       "commitMessage": "chore: release ${version}",
       "tagName": "v${version}",
+      "tag": true,
       "commit": true,
       "push": true
     },
