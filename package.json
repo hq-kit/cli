@@ -7,10 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/hq-kit/cli.git"
   },
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "main": "./dist/index.js",
   "bin": {
     "hq-kit": "./dist/index.js"
@@ -29,7 +26,7 @@
     "start:init": "npm run dist/index.js init",
     "start:add": "npm run dist/index.js add",
     "start:diff": "npm run dist/index.js diff",
-    "release": "export GITHUB_TOKEN=$(cat .github_token) && release-it"
+    "release": "export GITHUB_TOKEN=$(head -n 1 .github_token) && release-it"
   },
   "keywords": [
     "cli",
