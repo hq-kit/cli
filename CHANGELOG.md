@@ -1,5 +1,9 @@
 # Changelog
 
+## <small>1.0.11 (2025-07-27)</small>
+
+* Update release action ([69dedfc](https://github.com/hq-kit/cli/commit/69dedfc))
+
 ## <small>1.0.10 (2025-05-24)</small>
 
 * chore: update ([a8e69b4](https://github.com/hq-kit/cli/commit/a8e69b4))

@@ -1,13 +1,16 @@
 {
   "name": "hq-kit",
   "type": "module",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "The command line interface for HQ UI.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hq-kit/cli.git"
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "main": "./dist/index.js",
   "bin": {
     "hq-kit": "./dist/index.js"
