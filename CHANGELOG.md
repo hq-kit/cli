@@ -1,5 +1,9 @@
 # Changelog
 
+## <small>1.0.12 (2025-07-27)</small>
+
+* Update Actions ([26ab554](https://github.com/hq-kit/cli/commit/26ab554))
+
 ## <small>1.0.11 (2025-07-27)</small>
 
 * Fix actions ([5455cc6](https://github.com/hq-kit/cli/commit/5455cc6))
