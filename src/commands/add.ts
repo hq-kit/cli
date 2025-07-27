@@ -1,7 +1,7 @@
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { Separator, checkbox } from '@inquirer/prompts';
+import { checkbox } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
 import { getWriteComponentPath, writeExports, writeFile } from '../utils';
@@ -12,7 +12,7 @@ import {
   getRepoUrlForComponent,
 } from '../utils/repo';
 
-async function createComponent(componentName: string) {
+export async function createComponent(componentName: string) {
   const writePath = getWriteComponentPath(componentName);
   const dir = path.dirname(writePath);
 

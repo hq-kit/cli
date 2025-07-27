@@ -17,6 +17,7 @@ import {
   possibilityLibPath,
 } from '../utils/helpers';
 import { cssSource, hooksSource, utilsSource } from '../utils/repo';
+import { createComponent } from './add';
 
 export async function init() {
   let componentFolder: string;
@@ -73,7 +74,7 @@ export async function init() {
   }
 
   const packageManager = await getPackageManager();
-  const mainPackages = 'react-aria-components hq-icons';
+  const mainPackages = 'react-aria-components @tabler/icons-react';
   let devPackages =
     'tailwindcss tailwindcss-react-aria-components tailwind-variants clsx tw-animate-css';
 
@@ -129,9 +130,7 @@ export async function init() {
   // Write providers and theme-toggle file
   try {
     await writeProviders(componentFolder);
-    spinner.succeed(
-      `Theme provider and providers files copied to ${componentFolder}`,
-    );
+    spinner.succeed(`Provider files copied to ${componentFolder}`);
   } catch (error) {
     spinner.fail(`Failed to write Providers file: ${(error as Error).message}`);
   }
@@ -146,6 +145,8 @@ export async function init() {
 
   // Wait for the installation to complete before proceeding
   spinner.succeed('Installation complete.');
+
+  await createComponent('button');
 
   console.log(chalk.blueBright('========================'));
   console.log('||  Happy coding!  🔥 ||');
