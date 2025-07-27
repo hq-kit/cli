@@ -17,6 +17,10 @@ jobs:
           bun-version: latest
       - name: Install dependencies with Bun
         run: bun install
+      - name: Set Git identity
+        run: |
+          git config --global user.name "Diqi Al Haqqi"
+          git config --global user.email "dq.alhaqqi@gmail.com"
       - name: Run release-it
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
